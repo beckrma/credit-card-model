@@ -1,7 +1,6 @@
 import joblib
 import torch
-import numpy as np
-
+import pandas as pd
 from models.autoencoder import AutoEncoder
 
 model = AutoEncoder(input_dim=30)
@@ -13,8 +12,13 @@ model.eval()
 scaler = joblib.load("models/scaler.pkl")
 
 def predict_fraud(transaction):
-    transaction = transaction["transaction"]
-    transaction = np.array(transaction).reshape(1, -1)  # reshape to 2D array
+    # make copies of amount and time to sanity check original transaction
+    amount = transaction['Amount']
+    time = transaction['Time']
+
+    
+    transaction = pd.DataFrame([transaction])
+
 
     # scale the transaction data
     transaction_scaled = scaler.transform(transaction)
@@ -37,5 +41,7 @@ def predict_fraud(transaction):
     is_fraud = error > threshold
     return {
         "fraud": is_fraud,
-        "reconstruction_error": error
+        "reconstruction_error": error,
+        "time": time,
+        "amount": amount
     }

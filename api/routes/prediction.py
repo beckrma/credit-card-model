@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from services.prediction_service import predict_fraud
+from api.services.prediction_service import predict_fraud
 
 router = APIRouter(prefix="/api", tags=["Prediction"])
 

@@ -67,6 +67,7 @@ if __name__ == "__main__":
         demo_condition, more_non_fraud = get_demo_condition()
     else:
         demo_condition = None
+        more_non_fraud = None
     real_data, metadata = load_data()
     synthetic_data = synthesize_data(real_data, metadata, demo_condition, more_non_fraud)
     validating_data(real_data, synthetic_data, metadata)
