@@ -2,7 +2,6 @@ import json
 import sys
 import time
 import pandas as pd
-import random
 from kafka import KafkaProducer
 
 producer = KafkaProducer(

@@ -11,12 +11,19 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 def main():
     try:
-        # first, run training script to ensure model is trained and saved
-        subprocess.run([sys.executable, "-m", "training.autoencoder_training"], cwd=PARENT_DIR, check=True)
 
-        # then, run synthetic_data_generation script to generate synthetic data for this demo
-        logging.info("Generating synthetic data for demo...")
-        subprocess.run([sys.executable, "-m", "data.synthetic_data_generation"], cwd=PARENT_DIR, input="1\n", text=True, check=True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
+        # check if model is already trained and saved, if not, run training script
+        model_path = PARENT_DIR / "models" / "autoencoder_model.pth"
+        if not model_path.exists():
+            # first, run training script to ensure model is trained and saved
+            subprocess.run([sys.executable, "-m", "training.autoencoder_training"], cwd=PARENT_DIR, check=True)
+
+        # then, check if synthetic data is already generated, if not, run synthetic_data_generation script
+        synthetic_data_path = PARENT_DIR / "data" / "synthetic_creditcard_demo.csv"
+        if not synthetic_data_path.exists():
+            # run synthetic data generation script
+            logging.info("Generating synthetic data for demo...")
+            subprocess.run([sys.executable, "-m", "data.synthetic_data_generation"], cwd=PARENT_DIR, input="1\n", text=True, check=True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
 
         # then, start the FastAPI server to serve the prediction endpoint (without blocking main thread)
         logging.info("Starting FastAPI server...")
