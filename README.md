@@ -29,6 +29,20 @@ You need to have the following tools installed:
 - FastAPI
 - Git
 
+### Installation
+1. Clone the repository:
+```
+git clone https://github.com/beckrma/credit-card-model.git
+```
+2. Navigate into the directory:
+```
+cd credit-card-model
+```
+3. Install dependencies
+```
+pip install -r requirements.txt
+```
+
 ***Important:***   
 Make sure to download creditcard.csv into data folder for functionality!   
 https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud
