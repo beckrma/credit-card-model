@@ -34,6 +34,7 @@ def validating_data(real_data, synthetic_data, metadata):
     )
 
 def get_demo_condition():
+    # Define the conditions for the demo data generation so there are limited rows
     more_fraud = Condition(
         num_rows=500,
         column_values={"Class": 1}
@@ -46,6 +47,7 @@ def get_demo_condition():
     return more_fraud, more_non_fraud
 
 def modify_demo_data(synthetic_data):
+    # Modify the syntehtic demo data so that fraudulent transactions have more extreme feature values and higher amounts
     demo_data = synthetic_data
 
     fraud = demo_data["Class"] == 1
